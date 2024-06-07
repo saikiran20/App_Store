@@ -1,0 +1,21 @@
+/* Write your CSS here */
+.ta-item {
+  list-style-type: none;
+}
+.ta-item-btn {
+  font-size: 18px;
+  background-color: transparent;
+  border: none;
+  color: #7b8794;
+  border-bottom: 2px solid #7b8794;
+  padding-bottom: 5px;
+  outline: none;
+  font-weight: 500;
+  font-family: 'Roboto';
+  padding-left: 16px;
+  padding-right: 16px;
+}
+.active{
+  color: #2563eb;
+  border-bottom: 2px solid #2563eb;
+}
