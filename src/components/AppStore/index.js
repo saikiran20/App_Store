@@ -302,25 +302,29 @@ class AppStore extends Component {
     this.setState({activeTabId: tabId})
   }
 
-  getFilteredProjects = () => {
+  onChangeInput = event => {
+    this.setState({searchInput: event.target.value})
+  }
+
+  getFilteredProjects = searchedApps => {
     const {activeTabId} = this.state
-    const filteredAppList = appsList.fliter(
+    const filteredAppList = searchedApps.fliter(
       eachAppInfo => eachAppInfo.category === activeTabId,
     )
     return filteredAppList
   }
 
-  onChangeInput = event => {
-    this.setState({searchInput: event.target.value})
+  getSearchResults = () => {
+    const {searchInput} = this.state
+    const searchResults = appsList.filter(eachApp =>
+      eachApp.appName.toLowerCase().includes(searchInput.toLowerCase()),
+    )
   }
 
   render() {
     const {activeTabId, searchInput} = this.state
-    const filteredAppList = this.getFilteredProjects()
-
-    const searchList = filteredAppList.map(eachList =>
-      eachList.appName.toLowerCase().includes(searchInput.toLowerCase()),
-    )
+    const searchResults = this.getSearchResults()
+    const filteredAppList = this.getFilteredProjects(searchResults)
 
     return (
       <div className="app-container">
@@ -329,8 +333,10 @@ class AppStore extends Component {
           <div className="search-container">
             <input
               type="search"
+              placholder="Search"
               className="search-bar"
               onChange={this.onChangeInput}
+              value={searchInput}
             />
             <img
               className="search-img"
@@ -350,7 +356,7 @@ class AppStore extends Component {
           </ul>
           <div className="apps-container">
             <ul className="app-item-container">
-              {searchList.map(eachAppItem => (
+              {filteredAppList.map(eachAppItem => (
                 <AppItem key={eachAppItem.appId} appItemInfo={eachAppItem} />
               ))}
             </ul>
